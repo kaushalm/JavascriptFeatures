@@ -1,35 +1,55 @@
-// Import stylesheets
-import "./style.css";
+// let name = {
+//   firstName: "kaushal",
+//   lastName: "Mehra",
+//   printFullName: function() {
+//     console.log(this.firstName + this.lastName);
+//   }
+// };
 
-// Write Javascript code!
-const appDiv = document.getElementById("app");
-appDiv.innerHTML = `<h1>JS Starter</h1>`;
+// let printfulldetails = function(hometown, state) {
+//   console.log(this.firstName + this.lastName + hometown + state);
+// };
+
+// name.printFullName();
+
+// let name2 = {
+//   firstName: "Sachin",
+//   lastName: "Tendulkar"
+// };
+
+// name.printFullName.call(name2);
+
+// printfulldetails.call(name2, "delhi");
+
+// printfulldetails.apply(name, ["delhi", "India"]);
+
+// let newfun = printfulldetails.bind(name2, "bangalore", "karnataka");
+
+// newfun();
+
+//POLYFILL OF BIND
 
 let name = {
-  firstName: "kaushal",
-  lastName: "Mehra",
-  printFullName: function() {
-    console.log(this.firstName + this.lastName);
-  }
+  firstname: "kaushal",
+  lastname: "mehra"
 };
 
-let printfulldetails = function(hometown, state) {
-  console.log(this.firstName + this.lastName + hometown + state);
+let printname = function(hometown, state) {
+  console.log(
+    this.firstname + " " + this.lastname + " " + hometown + " " + state
+  );
 };
 
-name.printFullName();
+let printMyName = printname.bind(name, "Delhi");
+printMyName("Delhi");
 
-let name2 = {
-  firstName: "Sachin",
-  lastName: "Tendulkar"
+Function.prototype.mybind = function(...args) {
+  let obj = this;
+  params = args.slice(1);
+  return function(...args2) {
+    obj.apply(args[0], [...params, ...args2]);
+  };
 };
 
-name.printFullName.call(name2);
-
-printfulldetails.call(name2, "delhi");
-
-printfulldetails.apply(name, ["delhi", "India"]);
-
-let newfun = printfulldetails.bind(name2, "bangalore", "karnataka");
-
-newfun();
+let printMyName2 = printname.mybind(name, "Blr");
+printMyName2("Kar");
